@@ -1,0 +1,6 @@
+requests
+PIL
+transformers
+os 
+logging 
+pathlib
