@@ -3,3 +3,9 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/save_path
+
+
+data_transformation:
+   reading_data: artifacts/save_path
+   saving_data_train:   artifacts/transformed_data_train
+   saving_data_test : artifacts/transformed_data_test

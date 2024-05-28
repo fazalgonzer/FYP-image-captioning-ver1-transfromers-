@@ -1,1 +1,13 @@
-key: value 
+TrainingArguments:
+   seed: 2023 #seed does a random intialization of Data
+   epochs: 5
+   model_name : "Salesforce/blip-image-captioning-base"
+   training_batch_size: 4
+   valid_batch_size: 8
+   learning_rate : 1e-4 
+   scheduler: 'CosineAnnealingLR' #updating weights using cosine Scheuler
+   min_lr: 1e-6 #starting min learning rate
+   T_max: 500
+   weight_decay: 1e-6
+   n_accumulate : 1 #itni dair baad weights update hongay
+   device: torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

@@ -6,6 +6,7 @@ from box import ConfigBox
 from typing import Any
 from ensure import ensure_annotations
 from pathlib import Path
+import pickle 
 
 
 @ensure_annotations
@@ -37,5 +38,15 @@ def get_size(path:Path)->str:
     return f"~ {size_in_kb} KB"
 
 
-    
+@ensure_annotations 
+def save_tuple_to_file(tuple_data, filename):
+    with open(filename, 'wb') as file:
+        pickle.dump(tuple_data, file)
+
+
+@ensure_annotations
+def load_tuple_from_file(filename):
+    with open(filename, 'rb') as file:
+        data = pickle.load(file)
+    return data   
         
