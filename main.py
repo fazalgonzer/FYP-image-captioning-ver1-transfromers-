@@ -21,6 +21,6 @@ try:
     data_ingestion.main()
     logger.info(f">>>> {STAGE_NAME} Completed ")
 except Exception as e:
-    raise e
+     raise e
 
 

@@ -16,8 +16,12 @@ class DataIngestion:
          #run it after removing if first time then add it again so data is loaded correctly 
          if not os.path.exists(self.config.save_path):
             dataset= load_dataset('poloclub/diffusiondb', '2m_first_5k')
+            dataset = dataset['train']
+            dataset = dataset.filter(lambda example: example["step"] == 50)
+            dataset = dataset.train_test_split(test_size=0.1)
             dataset.save_to_disk(self.config.save_path)
             logger.info(f" file created at this loc -> {self.config.save_path}")
+            
 
         
             

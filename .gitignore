@@ -26,7 +26,7 @@ share/python-wheels/
 *.egg
 MANIFEST
 FYP
-
+floki 
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

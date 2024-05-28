@@ -32,6 +32,10 @@ class DataTransfromation():
        
 
        train_dataset=ImageCaptionDataset(dataset['train'],self.config.dataset_processor) 
+       valid_dataset = ImageCaptionDataset(dataset['test'], self.config.dataset_processor)
        
        with io_open(self.config.saving_data_train, 'wb') as  file:
           pickle.dump(train_dataset,file) 
+
+       with io_open(self.config.saving_data_test, 'wb') as  file:
+          pickle.dump(valid_dataset,file) 
