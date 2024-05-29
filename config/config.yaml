@@ -14,6 +14,10 @@ pre_training:
     saved_data_train: artifacts/transformed_data_train
     saved_data_test: artifacts/transformed_data_test
     saved_model: artifacts/saving_trained_model
+
+
+data_eval:
+
    
   
 
