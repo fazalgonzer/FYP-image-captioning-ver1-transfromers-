@@ -1,6 +1,6 @@
 from imagecaption.constants import * 
 from imagecaption.utils.common import read_yaml , create_directories
-from imagecaption.entity import DataIngestionConfig, Data_transformation_config
+from imagecaption.entity import DataIngestionConfig, Data_transformation_config ,Data_pretrain_config
 from datasets import load_from_disk
 
 
@@ -38,3 +38,31 @@ class ConfigurationManger:
         )
 
         return data_transformation_config
+    
+
+
+
+
+    def get_dataset_pretrain(self)->Data_pretrain_config:
+        config=self.config.pre_training
+
+        data_pretrain_config=Data_pretrain_config(
+            model=self.params.TrainingArguments.model_name,
+            n_accumulate=self.params.TrainingArguments.n_accumulate,
+            
+          
+            scheduler=self.params.TrainingArguments.scheduler,
+            training_batch_size=self.params.TrainingArguments.training_batch_size,
+            valid_batch_size=self.params.TrainingArguments.valid_batch_size,
+         
+         
+
+
+
+
+        )
+
+
+        return data_pretrain_config
+
+

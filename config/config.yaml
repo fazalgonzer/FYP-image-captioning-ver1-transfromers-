@@ -10,10 +10,11 @@ data_transformation:
    saving_data_train:   artifacts/transformed_data_train
    saving_data_test : artifacts/transformed_data_test
 
-data_training:
-    training_data_transformed: artifacts/transformed_data_train
-    test_data_transformed: artifacts/transformed_data_test
-    model_saved: artifacts/model_weights  
-
+pre_training:
+    saved_data_train: artifacts/transformed_data_train
+    saved_data_test: artifacts/transformed_data_test
+    saved_model: artifacts/saving_trained_model
+   
+  
 
     
