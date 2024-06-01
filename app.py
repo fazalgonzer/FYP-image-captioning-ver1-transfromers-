@@ -8,8 +8,17 @@ from pathlib import Path
 from imagecaption.pipeline.predict import PredictionPipeline
 app = Flask(__name__)
 CORS(app)
-UPLOAD_FOLDER = 'uploads_for_user'
+UPLOAD_FOLDER = 'templates\images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+
+
+
+
+
+
+
 
 
 class Classifier():
@@ -22,12 +31,14 @@ class Classifier():
          
     
 file_path=""     
+captions=""
 
 @app.route("/",methods=['GET'])
 @cross_origin()
 def home():
     captions=''
-    return render_template('index.html',captions=captions)
+    error=''
+    return render_template('index.html',captions=captions,Error=error)
 
 
 
@@ -44,24 +55,32 @@ def imageshow():
     if file:
            filename = file.filename
            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+           if os.path.exists(file_path):
+               os.remove(file_path)
            clapp.making(file_path)
            file.save(file_path)
+           return render_template('index.html',Error="File was uploaded sucessfully",image_source=file_path)
       
+    else:
+       return render_template('index.html',Error="image was not found")
     
-    return render_template('index.html',Error="image was not found")
     
         
 @app.route('/predict',methods=['GET'])
 @cross_origin()
 def predict():
-     captions =clapp.classifier.predict(False)
+     captions =clapp.classifier.predict()
+     clapp.classifier.Play(captions)
      return render_template('index.html',captions=captions)
 
      
-     
+@app.route('/play', methods=['GET', 'POST'])
+def play_audio():
+    return render_template('audio.html')
     
     
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     clapp=Classifier()
+   
     app.run(debug=True)

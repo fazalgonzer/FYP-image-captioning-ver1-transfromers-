@@ -12,7 +12,7 @@ class PredictionPipeline:
         self.filename=filename
         self.captions= None
 
-    def predict(self,audio:bool):
+    def predict(self):
         #load_model
         model= BlipForConditionalGeneration.from_pretrained("artifacts\model_withbin")#yaha pr saved model ki file ki location deni h 
         processor=AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base") # ye wese ka wese hi rehne de
@@ -22,17 +22,15 @@ class PredictionPipeline:
         captions=processor.decode(out[0], skip_special_tokens=True)
         self.captions=captions
         return captions
-    def Play(captions):
-          if os.path.exists('artifacts/Audio/2.mp3'):
-                os.remove('artifacts/Audio/2.mp3')
+    def Play(self,captions):
+          if os.path.exists('templates\Audio\\2.mp3'):
+                os.remove('templates\Audio\\2.mp3')
           myobj = gTTS(text=captions, lang='en', slow=False)
             
-          myobj.save('artifacts/Audio/2.mp3')
-          playsound('artifacts/Audio/2.mp3')
-obj=PredictionPipeline('uploads_for_user\iamn.jpeg')
-captions=obj.predict(False)
-print(captions)
-        
+          myobj.save('templates\Audio\\2.mp3')
+
+          
+
 
       
           
