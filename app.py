@@ -1,42 +1,47 @@
-from flask import Flask, request ,render_template , jsonify
-import os 
+from flask import Flask, render_template, request, redirect, url_for,  jsonify 
+
 from flask_cors import CORS, cross_origin
 
+import os 
+from PIL import Image
+from pathlib import Path
 from imagecaption.pipeline.predict import PredictionPipeline
-os.putenv('LANG','en_US.UTF-8')
-os.putenv('LC_ALL','en_US.UTF-8')
-
-app= Flask(__name__)
+app = Flask(__name__)
 CORS(app)
+UPLOAD_FOLDER = 'uploads_for_user'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
-class ClientAPP:
-    def __init__(self):
-        self.filename="inputImage.jpg"
-        self.classifier =PredictionPipeline(self.filename)
 
 @app.route("/",methods=['GET'])
 @cross_origin()
 def home():
-    return render_template('index.html')
+    captions="hello"
+    return render_template('index.html',captions=captions)
 
 
 
-#@app.route("/train",methods=['GET','POST'])
-#@cross_origin()
-#def trainRoute():
- #   os.system("python main.py")
-  #  return "training done Succesfully"
 
-@app.route("/predict",methods=['POST'])
+
+
+
+@app.route("/upload",methods=['POST'])
 @cross_origin()
-def predictRoute():
-    image = request.json['image']
+def imageshow():
+    file= None
+    file=request.files["image"]
+
+    if file:
+            filename = file.filename
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+            return render_template('index.html',image_path='D:\FYP caption Ver 1\FYP-image-captioning-ver1-transfromers-\uploads_for_user\img1.jpeg')
     
-    result=clApp.classifier.predict()
-    return jsonify(result)
+    
+    return render_template('index.html',Error="image was not found")
+    
+        
+   
+    
 
-
-if __name__ =="__main__":
-    clApp=ClientAPP()
-    app.run(host='0.0.0.0',port=80) 
+if __name__ == "__main__":
+    app.run(debug=True)

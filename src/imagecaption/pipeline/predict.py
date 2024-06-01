@@ -1,15 +1,16 @@
 import os 
-from transformers import AutoProcessor,BlipForConditionalGeneration #inko pip install krke ssolve krna h 
-from PIL import Image#inko pip install krke ssolve krna h 
-from gtts import gTTS#inko pip install krke ssolve krna h 
-from playsound import playsound#inko pip install krke ssolve krna h  
-#phir import hongi wrna nahi 
+from transformers import AutoProcessor,BlipForConditionalGeneration
+from PIL import Image 
+from gtts import gTTS 
+from playsound import playsound 
+
 
 
 
 class PredictionPipeline:
     def __init__(self, filename):
         self.filename=filename
+        self.captions= None
 
     def predict(self,audio:bool):
         #load_model
@@ -19,16 +20,20 @@ class PredictionPipeline:
         inputs = processor(img, return_tensors="pt")
         out = model.generate(**inputs)
         captions=processor.decode(out[0], skip_special_tokens=True)
-        if audio== True:
-            print(captions)
-            myobj = gTTS(text=captions, lang='en', slow=False)
-            if not os.path.exists:
-                myobj.save('artifacts/Audio/2.mp3')
-                playsound('artifacts/Audio/2.mp3')
-            return captions 
-        else:
-            print(captions)
-            return captions
+        self.captions=captions
+        return captions
+    def Play(captions):
+          if os.path.exists('artifacts/Audio/2.mp3'):
+                os.remove('artifacts/Audio/2.mp3')
+          myobj = gTTS(text=captions, lang='en', slow=False)
+            
+          myobj.save('artifacts/Audio/2.mp3')
+          playsound('artifacts/Audio/2.mp3')
+            
+        
+
+      
+          
 
 
 
