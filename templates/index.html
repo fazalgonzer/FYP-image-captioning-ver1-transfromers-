@@ -7,16 +7,22 @@
     <h2>Upload Image</h2>
     <form action="/upload" method="POST" enctype="multipart/form-data">
         <input type="file" name="image">
-        <input type="submit" value="Predict">
+        <input type="submit" value="Upload">
     </form>
-    <img src="{{image_path}}">
+    
 
     <br><b>{{Error}}</b>
 
     <h2>Predicted Captions</h2>
     <div id="caption-results">
         <!-- Predicted captions will be displayed here -->
-        {{captions}}
+
+        <form action="/predict" method="GET" enctype="multipart/form-data">
+            <input type="submit" value="predict">
+            
+            {{captions}}
+        </form>
+       
     </div>
 </body>
 </html>

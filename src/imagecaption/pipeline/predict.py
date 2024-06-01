@@ -29,7 +29,9 @@ class PredictionPipeline:
             
           myobj.save('artifacts/Audio/2.mp3')
           playsound('artifacts/Audio/2.mp3')
-            
+obj=PredictionPipeline('uploads_for_user\iamn.jpeg')
+captions=obj.predict(False)
+print(captions)
         
 
       

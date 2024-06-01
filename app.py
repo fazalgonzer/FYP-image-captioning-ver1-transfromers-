@@ -12,10 +12,21 @@ UPLOAD_FOLDER = 'uploads_for_user'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+class Classifier():
+    def __init__(self):
+        self.filename=None
+        self.classifier =None
+    def making(self,img):
+        self.filename=img
+        self.classifier =PredictionPipeline(self.filename)
+         
+    
+file_path=""     
+
 @app.route("/",methods=['GET'])
 @cross_origin()
 def home():
-    captions="hello"
+    captions=''
     return render_template('index.html',captions=captions)
 
 
@@ -31,17 +42,26 @@ def imageshow():
     file=request.files["image"]
 
     if file:
-            filename = file.filename
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            return render_template('index.html',image_path='D:\FYP caption Ver 1\FYP-image-captioning-ver1-transfromers-\uploads_for_user\img1.jpeg')
-    
+           filename = file.filename
+           file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+           clapp.making(file_path)
+           file.save(file_path)
+      
     
     return render_template('index.html',Error="image was not found")
     
         
-   
+@app.route('/predict',methods=['GET'])
+@cross_origin()
+def predict():
+     captions =clapp.classifier.predict(False)
+     return render_template('index.html',captions=captions)
+
+     
+     
+    
     
 
 if __name__ == "__main__":
+    clapp=Classifier()
     app.run(debug=True)
