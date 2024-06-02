@@ -8,7 +8,7 @@ from pathlib import Path
 from imagecaption.pipeline.predict import PredictionPipeline
 app = Flask(__name__)
 CORS(app)
-UPLOAD_FOLDER = 'templates\images'
+UPLOAD_FOLDER = 'static\images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -59,7 +59,7 @@ def imageshow():
                os.remove(file_path)
            clapp.making(file_path)
            file.save(file_path)
-           return render_template('index.html',Error="File was uploaded sucessfully",image_source=file_path)
+           return render_template('index.html',Error="File was uploaded sucessfully",image_path=file_path)
       
     else:
        return render_template('index.html',Error="image was not found")

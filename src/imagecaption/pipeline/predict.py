@@ -23,11 +23,11 @@ class PredictionPipeline:
         self.captions=captions
         return captions
     def Play(self,captions):
-          if os.path.exists('templates\Audio\\2.mp3'):
-                os.remove('templates\Audio\\2.mp3')
+          if os.path.exists('static\\audio\\2.mp3'):
+                os.remove('static\\audio\\2.mp3')
           myobj = gTTS(text=captions, lang='en', slow=False)
             
-          myobj.save('templates\Audio\\2.mp3')
+          myobj.save('static\\audio\\2.mp3')
 
           
 
