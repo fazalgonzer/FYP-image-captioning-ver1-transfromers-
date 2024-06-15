@@ -16,6 +16,7 @@ class PredictionPipeline:
         #load_model
         model= BlipForConditionalGeneration.from_pretrained("artifacts\model_withbin")#yaha pr saved model ki file ki location deni h 
         processor=AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base") # ye wese ka wese hi rehne de
+        print("process has been successfully completed image ")
         img = Image.open(self.filename)
         inputs = processor(img, return_tensors="pt")
         out = model.generate(**inputs)
