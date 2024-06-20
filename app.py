@@ -10,6 +10,8 @@ app = Flask(__name__)
 CORS(app)
 UPLOAD_FOLDER = 'static\images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['STATIC_FOLDER'] = 'static'
+
 
 
 
@@ -37,8 +39,8 @@ captions=""
 @cross_origin()
 def home():
     captions=''
-    error=''
-    return render_template('index.html',captions=captions,Error=error)
+    notification=''
+    return render_template('index.html',captions=captions,notification=notification)
 
 
 
@@ -56,7 +58,7 @@ def imageshow():
            filename = file.filename
            _, file_extension = os.path.splitext(filename)
            print(file_extension)
-           if file_extension in ['.png', '.jpg', '.jpeg']:
+           if file_extension in ['.png', '.jpg', '.jpeg','.PNG']:
 
                 
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -64,13 +66,13 @@ def imageshow():
                     os.remove(file_path)
                 clapp.making(file_path)
                 file.save(file_path)
-                return render_template('index.html',Error="File was uploaded sucessfully",image_path=file_path)
+                return render_template('index.html',notification="File was uploaded sucessfully",image_path=file_path)
            else:
-               return render_template('index.html',Error="unsupported file please upload jpg png ")
+               return render_template('index.html',notification="unsupported file please upload jpg png ")
            
             
     else:
-       return render_template('index.html',Error="image was not found or not supported type ")
+       return render_template('index.html',notification="image was not found or not supported type ")
     
 end_audio=""  
         
@@ -83,17 +85,17 @@ def predict():
         end=time.process_time()-start
      except Exception as e:
         print("prediction failed")
-        return render_template('index.html',Error="perdiction failed")
+        return render_template('index.html',notification="perdiction failed")
         raise e
      try:
         start_audio=time.process_time()
         clapp.classifier.Play(captions)
         end_audio=time.process_time()-start_audio
      except Exception as e:
-         return render_template('index.html',Error="failed to save audio ")
+         return render_template('index.html',notification="failed to save audio ")
      
          
-     return render_template('index.html',captions=captions ,Error=f"time taken to processs {end}")
+     return render_template('index.html',captions=captions ,notification=f"time taken to processs {end}")
 
      
 @app.route('/play', methods=['GET', 'POST'])
